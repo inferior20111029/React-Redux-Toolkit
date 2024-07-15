@@ -5,19 +5,20 @@ import { setParameter } from './reducers/parameterSlice';
 import Page1 from './pages/Page1';
 import Page2 from './pages/Page2';
 import Page3 from './pages/Page3';
-
 import { AppBar, Toolbar, Button, Typography } from '@mui/material';
 
 const App = () => (
     <Router>
         <Routes>
-            <Route path="/" element={<Navigate to="/1" />} />
-            <Route path="/:param/*" element={<Main />} />
+            <Route path="/" element={<Navigate to="/page1/1" />} />
+            <Route path="/page1/:param" element={<Main page={<Page1 />} />} />
+            <Route path="/page2/:param" element={<Main page={<Page2 />} />} />
+            <Route path="/page3/:param" element={<Main page={<Page3 />} />} />
         </Routes>
     </Router>
 );
 
-const Main = () => {
+const Main = ({ page }) => {
     const { param } = useParams();
     const dispatch = useDispatch();
 
@@ -32,16 +33,12 @@ const Main = () => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Parameter: {param}
                     </Typography>
-                    <Button color="inherit" component={Link} to={`/${param}/page1`}>Page 1</Button>
-                    <Button color="inherit" component={Link} to={`/${param}/page2`}>Page 2</Button>
-                    <Button color="inherit" component={Link} to={`/${param}/page3`}>Page 3</Button>
+                    <Button color="inherit" component={Link} to={`/page1/${param}`}>Page 1</Button>
+                    <Button color="inherit" component={Link} to={`/page2/${param}`}>Page 2</Button>
+                    <Button color="inherit" component={Link} to={`/page3/${param}`}>Page 3</Button>
                 </Toolbar>
             </AppBar>
-            <Routes>
-                <Route path="page1" element={<Page1 />} />
-                <Route path="page2" element={<Page2 />} />
-                <Route path="page3" element={<Page3 />} />
-            </Routes>
+            {page}
         </div>
     );
 };
