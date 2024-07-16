@@ -6,7 +6,8 @@ const Page3 = () => {
     const parameter = useSelector((state) => state.parameter);
     return (
         <Box sx={{ p: 1 }}>
-            <Typography variant="h4">Page 3 - Parameter: {parameter}</Typography>
+            <Typography variant="h4" gutterBottom>Page 3</Typography>
+            <Typography variant="body1">Parameter: {parameter}</Typography>
         </Box>
     );
 };
