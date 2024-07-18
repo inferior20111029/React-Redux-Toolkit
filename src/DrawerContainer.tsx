@@ -1,7 +1,14 @@
 import React from 'react';
 import { Box, Drawer } from '@mui/material';
 
-const DrawerContainer = ({ isMobile, mobileOpen, handleDrawerToggle, drawer }) => (
+interface DrawerContainerProps {
+    isMobile: boolean;
+    mobileOpen: boolean;
+    handleDrawerToggle: () => void;
+    drawer: React.ReactNode;
+}
+
+const DrawerContainer: React.FC<DrawerContainerProps> = ({ isMobile, mobileOpen, handleDrawerToggle, drawer }) => (
     <Box
         component="nav"
         sx={{ width: { sm: 240 }, flexShrink: { sm: 0 } }}

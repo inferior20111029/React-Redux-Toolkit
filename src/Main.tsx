@@ -1,34 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setParameter } from './reducers/parameterSlice';
-import { Box, Toolbar, List, ListItem, ListItemText, useMediaQuery, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Box, Toolbar, List, ListItem, ListItemText, Typography, Divider } from '@mui/material';
 import DrawerContainer from './DrawerContainer';
 import MainContent from './MainContent';
+import useParameter from './hooks/useParameter';
+import useDrawer from './hooks/useDrawer';
 
-const Main = ({ PageComponent }) => {
-    const { param } = useParams();
-    const dispatch = useDispatch();
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [mobileOpen, setMobileOpen] = useState(false);
+interface MainProps {
+    PageComponent: React.FC;
+}
 
-    useEffect(() => {
-        dispatch(setParameter(param));
-    }, [param, dispatch]);
-
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
-    };
-
+const Main: React.FC<MainProps> = ({ PageComponent }) => {
+    const param = useParameter() || '';
+    const { isMobile, mobileOpen, handleDrawerToggle } = useDrawer();
     const drawerItems = ['Page 1', 'Page 2', 'Page 3'];
+
     const drawer = (
         <>
             <Toolbar />
-            <Typography variant="h6" component="div" sx={{ p: 2 }}>
-                Parameter: {param}
-            </Typography>
+            <Box sx={{ p: 2 }}>
+                <Typography variant="h6">
+                    Parameter: {param}
+                </Typography>
+            </Box>
+            <Divider />
             <List>
                 {drawerItems.map((text, index) => (
                     <ListItem button component={Link} to={`/${drawerItems[index].toLowerCase().replace(' ', '')}/${param}`} key={text}>

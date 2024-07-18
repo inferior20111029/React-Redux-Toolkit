@@ -8,7 +8,7 @@ import Page3 from './pages/Page3';
 
 const pages = [Page1, Page2, Page3];
 
-const App = () => (
+const App: React.FC = () => (
     <Router>
         <CssBaseline />
         <Routes>
