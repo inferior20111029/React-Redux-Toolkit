@@ -1,17 +1,26 @@
-import React from 'react';
-import { Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useSocket } from '../SocketContext';
 
 const Page3: React.FC = () => {
+    const socket = useSocket();
+
+    useEffect(() => {
+        if (!socket) return;
+
+        socket.on('message', (message: string) => {
+            console.log(message);
+        });
+
+        return () => {
+            socket.off('message');
+        };
+    }, [socket]);
+
     return (
         <div>
-            <Typography variant="h4" gutterBottom>
-    Page 3
-    </Typography>
-    <Typography variant="body1">
-        This is Page 3.
-    </Typography>
-    </div>
-);
+            <h1>Page 3</h1>
+        </div>
+    );
 };
 
 export default Page3;
